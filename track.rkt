@@ -15,13 +15,14 @@
 
 (define (interpolate l r x)
   (let ([dy/dx (/ (- (second r) (second l)) (- (first r) (first l)))])
-    (* dy/dx (- x (first l)))))
+    (+ (second l) (* dy/dx (- x (first l))))))
 
 (define (track-y track x)
   (if (empty? track)
     0
     (let-values ([(l r) (find-surrounding-points track x)])
       (cond
+        ([and (false? l) (false? r)] 0)
         ([false? l] (second r))
         ([false? r] (second l))
         (else (interpolate l r x))))))
