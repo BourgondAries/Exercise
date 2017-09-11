@@ -47,9 +47,10 @@
       (if (or (not (member from dictionary)) (not (member to dictionary)))
         "Not in dict"
         (for/fold ([s '()] [stop #f])
-                  ([n (in-naturals)])
+                  ([n (in-naturals (string-levenshtein from to))])
                   #:break stop
           (info n)
           (iddfs* 0 (add1 n) '() from to dictionary))))))
 
 (time (iddfs "clean" "words"))
+(time (iddfs "clean" "deals"))
